@@ -1,6 +1,6 @@
 # Little Takes
 
-A public, Thai-first ASCII art photobooth with a violet-and-white character garden, 24 ASCII stickers, and eight little animal friends.
+A public, Thai-first ASCII art photobooth with violet-and-white botanical illustrations, glamorous calligraphy, 24 ASCII stickers, and eight little animal friends.
 
 ## Use
 
@@ -10,7 +10,7 @@ Choose a layout and frame, enable the camera, and take a timed photo sequence. Y
 - Eight frames: Violet Garden, Love Letters, Cloud Notes, Moonlight, Paper Petals, Sweet Notes, Lavender, and Lilac Friends.
 - Seven filters (including a live ASCII character filter), mirrored camera, front/rear camera request, optional countdown audio, and 0/3/5/10-second timers.
 - 24 original ASCII stickers; dragging, resizing, rotation, and deletion.
-- Thai or English text, seven ink colors, freehand drawing, undo/redo, custom caption, and optional date.
+- Thai or English lettering with glam script, clean, and typewriter fonts; seven ink colors, freehand drawing, undo/redo, custom caption, and optional date.
 - Full-resolution strip PNG and a separate 1080 × 1920 story composition.
 - Device sharing with a download fallback. Browsers cannot guarantee a direct Instagram/Facebook/LINE Story destination: available targets depend on the device and installed apps. Select the exported image inside the target app if its Story option is absent.
 - Responsive layout, keyboard-accessible controls, reduced-motion support, and local fonts.
@@ -48,4 +48,6 @@ Native mobile share sheets and physical front/rear cameras require a real device
 
 ## Artwork and fonts
 
-ASCII characters, garden scenery, and frame designs are original text compositions in `src/ascii.js`, shared by SVG previews and Canvas exports. The interface uses system monospace fonts with locally bundled Bai Jamjuree for Thai text. Font license texts are in `assets/fonts/`.
+ASCII characters and frame designs are original compositions in `src/ascii.js` and `src/ornaments.js`, shared by SVG previews and Canvas exports. Original botanical and character drawings are sampled into shaded ASCII text, with explicit whitespace preservation for SVG rendering. The detailed character illustration direction was inspired by the [ASCII Art Archive](https://www.asciiart.eu/animals/insects/butterflies); no artwork was copied.
+
+Locally bundled [Great Vibes](https://fonts.google.com/specimen/Great+Vibes) and [Charm](https://fonts.google.com/specimen/Charm) provide Latin and Thai calligraphy. Bai Jamjuree is used for small interface text, and system monospace fonts preserve the ASCII illustrations. Canvas exports wait for the font files, and text selection uses the same typeface as export. Font license texts are in `assets/fonts/`.

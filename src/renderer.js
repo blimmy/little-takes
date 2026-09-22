@@ -1,5 +1,6 @@
-import { LAYOUTS, FRAMES } from './config.js?v=ascii-violet-1';
-import { drawSprite, landscapeSVG, svgData, drawAsciiPhoto, ASCII_FONT } from './ascii.js?v=ascii-violet-1';
+import { LAYOUTS, FRAMES } from './config.js?v=glam-2';
+import { drawSprite, landscapeSVG, svgData, drawAsciiPhoto, ASCII_FONT } from './ascii.js?v=glam-2';
+import { letteringFont, fontsReady } from './typography.js?v=glam-2';
 
 const imageCache = new Map();
 const filteredCache = new Map();
@@ -82,14 +83,16 @@ function asciiBorder(ctx,x,y,w,h,color,size) {
 }
 
 export async function renderStrip(state, placeholders = true) {
+  await fontsReady;
   const layout = LAYOUTS.find(l=>l.id===state.layout);
   const frame = FRAMES.find(f=>f.id===state.frame);
   const c = document.createElement('canvas'); c.width=layout.width; c.height=layout.height;
   const ctx = c.getContext('2d'); const w=c.width,h=c.height;
   ctx.fillStyle=frame.bg; ctx.fillRect(0,0,w,h); pattern(ctx,frame,w,h);
   asciiBorder(ctx,w*.021,w*.027,w-w*.042,h-w*.054,frame.accent,w*.02);
-  ctx.fillStyle=frame.ink; ctx.font=`bold ${w*.033}px ${ASCII_FONT}`; ctx.textAlign='center';
-  ctx.fillText('[ little takes ]',w/2,w*.084);
+  ctx.fillStyle=frame.ink; ctx.font=letteringFont(w*.076); ctx.textAlign='center';
+  ctx.fillText('Little Takes',w/2,w*.086);
+  drawSprite(ctx,'bow',w*.14,w*.012,w*.085);drawSprite(ctx,'butterfly',w*.77,w*.014,w*.085);
   const slots=geometry(layout);
   for(let i=0;i<slots.length;i++) {
     const r=slots[i];
@@ -104,11 +107,12 @@ export async function renderStrip(state, placeholders = true) {
   }
   ctx.font=`${w*.027}px ${ASCII_FONT}`;ctx.fillStyle=frame.ink;ctx.textAlign='center';
   slots.forEach((r,i)=>{if(layout.cols===1){ctx.fillText(i%2?'*':'+',w*.04,r.y+r.h*.6);ctx.fillText(i%2?'+':'*',w*.962,r.y+r.h*.25);}});
-  drawSprite(ctx,frame.sticker,w*.065,h-w*.2,w*.115);
-  drawSprite(ctx,frame.secondary,w*.81,h-w*.17,w*.095);
-  ctx.fillStyle=frame.ink; ctx.font=`600 ${w*.037}px "Bai Jamjuree", sans-serif`;
-  ctx.fillText(state.caption || 'a little moment, a lovely memory',w/2,h-w*.136,w*.61);
-  ctx.font=`${w*.03}px ${ASCII_FONT}`;
+  drawSprite(ctx,frame.sticker,w*.035,h-w*.22,w*.15);
+  drawSprite(ctx,frame.secondary,w*.82,h-w*.19,w*.13);
+  const caption=state.caption || 'Lovely little memories';
+  ctx.fillStyle=frame.ink; ctx.font=letteringFont(w*(/[\u0e00-\u0e7f]/.test(caption)?.044:.065));
+  ctx.fillText(caption,w/2,h-w*.127,w*.62);
+  ctx.font=`${w*.025}px ${ASCII_FONT}`;
   ctx.fillText(state.showDate ? state.date : 'made with love',w/2,h-w*.076);
   for (const stroke of state.strokes) {
     if (!stroke.points.length) continue;
@@ -122,8 +126,8 @@ export async function renderStrip(state, placeholders = true) {
     ctx.save(); ctx.translate(item.x*w,item.y*h); ctx.rotate((item.rotation||0)*Math.PI/180);
     if(item.type==='sticker') drawSprite(ctx,item.name,-size/2,-size/2,size);
     else {
-      ctx.fillStyle=item.color; ctx.font=`700 ${size}px "Bai Jamjuree", sans-serif`; ctx.textAlign='center'; ctx.textBaseline='middle';
-      ctx.shadowColor='#fff9e9';ctx.shadowBlur=0;ctx.shadowOffsetX=2;ctx.shadowOffsetY=2;
+      ctx.fillStyle=item.color; ctx.font=letteringFont(size,item.font); ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.shadowColor='#fffcff';ctx.shadowBlur=0;ctx.shadowOffsetX=1;ctx.shadowOffsetY=1;
       ctx.fillText(item.text,0,0,w*.9);
     }
     ctx.restore();
@@ -137,9 +141,9 @@ export function makeStory(strip, frameId) {
   const ratio=Math.min(850/strip.width,1430/strip.height),w=strip.width*ratio,h=strip.height*ratio,x=(1080-w)/2,y=(1920-h)/2;
   ctx.fillStyle=f.accent;ctx.globalAlpha=.4;ctx.fillRect(x+15,y+20,w,h);ctx.globalAlpha=1;
   ctx.drawImage(strip,x,y,w,h);
-  drawSprite(ctx,f.sticker,98,125,88);drawSprite(ctx,f.secondary,860,1710,75);
-  ctx.fillStyle=f.ink;ctx.textAlign='center';ctx.font=`30px ${ASCII_FONT}`;ctx.fillText('* a little moment *',540,162);
-  ctx.font=`28px ${ASCII_FONT}`;ctx.fillText('[ little takes ]',540,1780);
+  drawSprite(ctx,'bouquet',35,64,205);drawSprite(ctx,'butterfly',825,1607,173);
+  ctx.fillStyle=f.ink;ctx.textAlign='center';ctx.font=letteringFont(58);ctx.fillText('A little moment',540,162);
+  ctx.font=letteringFont(65);ctx.fillText('Little Takes',540,1789);
   return c;
 }
 

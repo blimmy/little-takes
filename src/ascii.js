@@ -1,4 +1,5 @@
 // Original character art, shared by SVG previews and Canvas exports.
+import { ORNAMENTS, ornamentSVG } from './ornaments.js?v=glam-2';
 export const ASCII_FONT = '"Courier New", Courier, monospace';
 const ART = {
   flower: ['  .-.  ', ' ( @ ) ', '  `|\'  ', ' \\ | / ', '  \\|/  '],
@@ -28,12 +29,12 @@ const ART = {
 };
 const INKS = { berry:'#a05b97', heart:'#a05b97', flower:'#9b70b5', peach:'#a26b9b', bow:'#ab78b6', cherry:'#a26096', moon:'#71619d', cloud:'#8b83ab', star:'#9d81bb', frog:'#776296', sprout:'#7f6d9e', bunny:'#9479af', cat:'#7a5c9c', ghost:'#9180b8' };
 const xml = text => text.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
-export function artLines(name) { return ART[name] || ART.flower; }
+export function artLines(name) { return ORNAMENTS[name] || ART[name] || ART.flower; }
 
 export function spriteSVG(name, size=32) {
   const lines=artLines(name), width=Math.max(...lines.map(l=>l.length))*10+4, height=lines.length*17+5;
   const color=INKS[name] || '#83669e';
-  return `<svg xmlns="http://www.w3.org/2000/svg" class="ascii-sprite" width="${size}" height="${size}" viewBox="0 0 ${width} ${height}" aria-hidden="true"><g fill="${color}" font-family="Courier New, Courier, monospace" font-size="16.67" font-weight="bold" xml:space="preserve">${lines.map((line,i)=>`<text x="2" y="${15+i*17}">${xml(line)}</text>`).join('')}</g></svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" class="ascii-sprite" width="${size}" height="${size}" viewBox="0 0 ${width} ${height}" aria-hidden="true"><g fill="${color}" font-family="Courier New, Courier, monospace" font-size="16.67" font-weight="bold" xml:space="preserve">${lines.map((line,i)=>`<text style="white-space:pre" x="2" y="${15+i*17}">${xml(line)}</text>`).join('')}</g></svg>`;
 }
 
 export function drawSprite(ctx,name,x,y,size) {
@@ -46,28 +47,20 @@ export function drawSprite(ctx,name,x,y,size) {
   ctx.restore();
 }
 
-function textArt(lines,x,y,size,color='#ad98c3') {
-  return `<g fill="${color}" font-family="Courier New, Courier, monospace" font-size="${size}" font-weight="bold" xml:space="preserve">${lines.map((line,i)=>`<text x="${x}" y="${y+i*size*1.12}">${xml(line)}</text>`).join('')}</g>`;
-}
-
 export function landscapeSVG(variant=0) {
-  const backgrounds=['#f9f5fd','#fcf6fb','#f5f2fc','#fdfbff'];
-  const cloud=['    .--.    ',' .-(    ).  ','(        _) ',' `------\'   '];
-  const tree=['    /\\    ','   /..\\   ','  /....\\  ',' /......\\ ','/________\\','    ||    '];
-  const cottage=['        /\\        ','       /  \\       ','      /____\\      ','     /|    |\\     ','    /_|____|_\\    ','     | [] []|     ','     |  __  |     ','     | |  | |     ',' ____|_|__|_|____ '];
-  const petals=['     _','   _(_)_','  (_)@(_)','    (_)','     | /'];
+  const backgrounds=['#f9f5fd','#fcf6fb','#f5f2fc','#fdfbff'],inks=['#a087b8','#ad8ba9','#9884b0','#af9abb'];
+  const ink=inks[variant%4];
+  const motif=(name,x,y,w,h,rotate=0)=>`<g transform="translate(${x} ${y}) rotate(${rotate} ${w/2} ${h/2})">${ornamentSVG(name,w,h,ink)}</g>`;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="640" height="400" viewBox="0 0 640 400">
     <rect width="640" height="400" fill="${backgrounds[variant%4]}"/>
-    ${textArt(cloud,18,28,10,'#d0bbdf')}${textArt(cloud,435,43,12,'#c4b2d6')}${textArt(['  \\ | /  ',' --(o)-- ','  / | \\  '],540,27,10,'#b59ccd')}
-    ${textArt(['.','+','*'],168,43,13,'#c3acd4')}${textArt(['.    +    .'],290,48,10,'#c7b4db')}
-    ${textArt(tree,6,123,13,'#c7b3db')}${textArt(tree,88,171,9,'#d9cbe6')}${textArt(tree,510,139,12,'#c1aed5')}
-    ${textArt(cottage,240,141,11,'#b299c6')}
-    ${textArt(['.-.   .-.   .-.   .-.   .-.','| |---| |---| |---| |---| |','| |---| |---| |---| |---| |'],380,251,10,'#cdbdde')}
-    ${textArt(['. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .'],4,295,10,'#dfd2eb')}
-    ${textArt(artLines('bunny'),154,259,13,'#9879b3')}${textArt(artLines('cat'),485,305,13,'#9f85b9')}${textArt(artLines('frog'),62,328,12,'#a28bb7')}
-    ${textArt(petals,210,328,10,'#bea0d0')}${textArt(petals,410,303,9,'#c5afd8')}${textArt(artLines('mushroom'),563,337,10,'#b49acb')}
-    ${textArt(['~ ~ ~ ~','  ~ ~ ~ ~','~ ~ ~ ~'],306,329,10,'#c8b9de')}
-    ${textArt(['" \\|/  .   ,   "    .   \\|/   "    .     ,   \\|/   .   "    .   ,'],10,389,11,'#cdbadd')}
+    <rect x="15" y="15" width="610" height="370" rx="150" fill="none" stroke="#d8c6e7" stroke-dasharray="1 6"/>
+    <ellipse cx="318" cy="199" rx="204" ry="178" fill="#fffcff" opacity=".7"/>
+    ${motif(variant%2?'rose':'bouquet',-12,116,205,270,-13)}
+    ${motif('butterfly',471,24,158,142,18)}
+    ${motif('rose',498,229,128,164,19)}
+    ${motif(variant%2?'cat':'bunny',40,254,88,107,-8)}
+    ${motif('bow',268,23,108,89)}
+    <g fill="${ink}" font-family="Courier New,monospace" font-size="15"><text x="154" y="57">*</text><text x="471" y="244">+</text><text x="215" y="339">.</text><text x="412" y="75">.</text><text x="395" y="361">*</text><text x="62" y="127">+</text></g>
   </svg>`;
 }
 

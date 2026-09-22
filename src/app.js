@@ -1,6 +1,8 @@
-import { LAYOUTS, FRAMES, FILTERS, STICKERS, COLORS } from './config.js?v=ascii-violet-1';
-import { spriteSVG, landscapeSVG, svgData, drawAsciiPhoto } from './ascii.js?v=ascii-violet-1';
-import { renderStrip, makeStory, canvasBlob, loadImage, geometry, clearImageCaches } from './renderer.js?v=ascii-violet-1';
+import { LAYOUTS, FRAMES, FILTERS, STICKERS, COLORS } from './config.js?v=glam-2';
+import { spriteSVG, landscapeSVG, svgData, drawAsciiPhoto } from './ascii.js?v=glam-2';
+import { renderStrip, makeStory, canvasBlob, loadImage, geometry, clearImageCaches } from './renderer.js?v=glam-2';
+import { ornamentSVG } from './ornaments.js?v=glam-2';
+import { letteringFont } from './typography.js?v=glam-2';
 
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
@@ -23,6 +25,7 @@ function notify(message,error=false){clearTimeout(toastTimer);$('#toast').textCo
 function errorMessage(message){$('#camera-error').textContent=message;$('#camera-error').hidden=false;}
 
 function initUI(){
+  $$('[data-ornament]').forEach(el=>el.innerHTML=ornamentSVG(el.dataset.ornament,260,260,'#8057a0'));
   $('#garden-friends').innerHTML=FRIENDS.map(([id,name,thai])=>`<button class="garden-friend" data-friend="${id}" aria-label="ทักทาย${thai}"><span class="friend-shadow"></span>${spriteSVG(id,56)}<span class="friend-name">${name}</span></button>`).join('');
   $$('[data-sprite]').forEach(el=>el.innerHTML=spriteSVG(el.dataset.sprite));
   $('#camera-landscape').src=svgData(landscapeSVG());
@@ -223,13 +226,13 @@ function addSticker(name){
 function addText(){
   const text=$('#text-input').value.trim();if(!text){$('#text-input').focus();return;}
   if(state.items.length>=60){notify('ลบของตกแต่งเก่าก่อนเพิ่มข้อความนะ');return;}
-  remember();const id=crypto.randomUUID();state.items.push({id,type:'text',text,color,x:.5,y:.5,size:Number($('#text-size').value)/100,rotation:0});selected=id;$('#text-input').value='';refreshPreview();
+  remember();const id=crypto.randomUUID();state.items.push({id,type:'text',text,font:$('#text-font').value,color,x:.5,y:.5,size:Number($('#text-size').value)/100,rotation:0});selected=id;$('#text-input').value='';refreshPreview();
 }
 function itemBounds(item){
   const ratio=preview.width/preview.height;
   let w=item.size,h=item.size*ratio;
   if(item.type==='text'){
-    const ctx=preview.getContext('2d');ctx.font=`700 ${item.size*preview.width}px "Bai Jamjuree", sans-serif`;w=Math.min(.9,ctx.measureText(item.text).width/preview.width);h=item.size*ratio*1.3;
+    const ctx=preview.getContext('2d');ctx.font=letteringFont(item.size*preview.width,item.font);w=Math.min(.9,ctx.measureText(item.text).width/preview.width);h=item.size*ratio*1.5;
   }
   return{x:item.x-w/2,y:item.y-h/2,w,h};
 }
@@ -325,6 +328,7 @@ $('#mirror').addEventListener('click',()=>{mirrored=!mirrored;$('#mirror').class
 $('#switch-camera').addEventListener('click',async()=>{facing=facing==='user'?'environment':'user';mirrored=facing==='user';$('#mirror').classList.toggle('active',mirrored);$('#mirror').setAttribute('aria-pressed',String(mirrored));await startCamera();});
 $('#sound').addEventListener('click',()=>{sound=!sound;$('#sound').setAttribute('aria-pressed',String(sound));$('#sound').classList.toggle('active',sound);$('#sound span').textContent=sound?'เสียงเปิด':'เสียงปิด';beep();});
 $('#next-step').addEventListener('click',()=>goToStep(step===1?2:3));$('#add-text').addEventListener('click',addText);
+$('#text-font').addEventListener('change',()=>{$('.lettering-sample').style.font=letteringFont(27,$('#text-font').value);});
 $('#text-input').addEventListener('keydown',e=>{if(e.key==='Enter')addText();});
 $('#clear-drawing').addEventListener('click',()=>{if(!state.strokes.length)return;remember();state.strokes=[];refreshPreview();});
 $('#undo').addEventListener('click',()=>{if(history.length){future.push(snapshot());restore(history.pop());}});
