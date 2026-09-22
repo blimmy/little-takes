@@ -1,15 +1,15 @@
 # Little Takes
 
-A public, Thai-first pixel photobooth with an original pastel garden, 24 pixel stickers, and eight little animal friends.
+A public, Thai-first ASCII art photobooth with a violet-and-white character garden, 24 ASCII stickers, and eight little animal friends.
 
 ## Use
 
 Choose a layout and frame, enable the camera, and take a timed photo sequence. You can also upload pictures or try the included illustrated samples. Decorate the composition, then download a PNG or use the device's native share menu.
 
 - Four layouts: three-photo strip, four-photo strip, 2 × 2 grid, and a single-photo keepsake.
-- Eight frames: Little Meadow, Berry Picnic, Cloud Nine, Moon Magic, Sunny Side, Peach Please, Sakura Dreams, and Mint to Be.
-- Six filters, mirrored camera, front/rear camera request, optional countdown audio, and 0/3/5/10-second timers.
-- 24 original pixel stickers; dragging, resizing, rotation, and deletion.
+- Eight frames: Violet Garden, Love Letters, Cloud Notes, Moonlight, Paper Petals, Sweet Notes, Lavender, and Lilac Friends.
+- Seven filters (including a live ASCII character filter), mirrored camera, front/rear camera request, optional countdown audio, and 0/3/5/10-second timers.
+- 24 original ASCII stickers; dragging, resizing, rotation, and deletion.
 - Thai or English text, seven ink colors, freehand drawing, undo/redo, custom caption, and optional date.
 - Full-resolution strip PNG and a separate 1080 × 1920 story composition.
 - Device sharing with a download fallback. Browsers cannot guarantee a direct Instagram/Facebook/LINE Story destination: available targets depend on the device and installed apps. Select the exported image inside the target app if its Story option is absent.
@@ -48,4 +48,4 @@ Native mobile share sheets and physical front/rear cameras require a real device
 
 ## Artwork and fonts
 
-Pixel characters, garden scenery, and frame designs were drawn for this project in `src/pixels.js`. No game artwork is included. Bai Jamjuree and Press Start 2P are bundled locally under the SIL Open Font License; the license texts are in `assets/fonts/`.
+ASCII characters, garden scenery, and frame designs are original text compositions in `src/ascii.js`, shared by SVG previews and Canvas exports. The interface uses system monospace fonts with locally bundled Bai Jamjuree for Thai text. Font license texts are in `assets/fonts/`.

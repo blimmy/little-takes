@@ -6,14 +6,14 @@ export const LAYOUTS = [
 ];
 
 export const FRAMES = [
-  { id: 'meadow', name: 'Little meadow', thai: 'สวนเล็ก ๆ', bg: '#e5edcc', ink: '#4a6550', accent: '#a2b87d', light: '#f7f7de', sticker: 'flower', secondary: 'frog', pattern: 'grass' },
-  { id: 'berry', name: 'Berry picnic', thai: 'ปิกนิกสตรอว์เบอร์รี', bg: '#f6d9dc', ink: '#a35769', accent: '#de929e', light: '#fff0e8', sticker: 'berry', secondary: 'heart', pattern: 'gingham' },
-  { id: 'cloud', name: 'Cloud nine', thai: 'บนก้อนเมฆ', bg: '#dcecf1', ink: '#587a92', accent: '#a3c6d9', light: '#f6f7eb', sticker: 'cloud', secondary: 'star', pattern: 'cloud' },
-  { id: 'moon', name: 'Moon magic', thai: 'คืนดาวพราว', bg: '#e5dcf1', ink: '#77648d', accent: '#b5a0d0', light: '#fff2d7', sticker: 'moon', secondary: 'star', pattern: 'stars' },
-  { id: 'sunny', name: 'Sunny side', thai: 'วันแดดอุ่น', bg: '#f7ecc7', ink: '#92744d', accent: '#d7b66c', light: '#fff9df', sticker: 'sunflower', secondary: 'bee', pattern: 'dots' },
-  { id: 'peach', name: 'Peach please', thai: 'พีชใจฟู', bg: '#f6dfcf', ink: '#ab795e', accent: '#e3b18b', light: '#fff2db', sticker: 'peach', secondary: 'heart', pattern: 'gingham' },
-  { id: 'sakura', name: 'Sakura dreams', thai: 'ใต้ต้นซากุระ', bg: '#f4deed', ink: '#a27593', accent: '#d9adcb', light: '#fff0f5', sticker: 'flower', secondary: 'bow', pattern: 'petals' },
-  { id: 'mint', name: 'Mint to be', thai: 'เพื่อนรักสีมิ้นต์', bg: '#d7ebe1', ink: '#5d8a78', accent: '#97c5ae', light: '#eff9e8', sticker: 'frog', secondary: 'mushroom', pattern: 'grass' },
+  { id: 'meadow', name: 'Violet garden', thai: 'สวนไวโอเลต', bg: '#faf6ff', ink: '#72538e', accent: '#cab5df', light: '#ffffff', sticker: 'flower', secondary: 'frog', pattern: 'grass' },
+  { id: 'berry', name: 'Love letters', thai: 'จดหมายรัก', bg: '#f8edf9', ink: '#8f5698', accent: '#d1b2d7', light: '#ffffff', sticker: 'berry', secondary: 'heart', pattern: 'gingham' },
+  { id: 'cloud', name: 'Cloud notes', thai: 'บันทึกบนก้อนเมฆ', bg: '#fbfaff', ink: '#7b6a99', accent: '#c9bde0', light: '#ffffff', sticker: 'cloud', secondary: 'star', pattern: 'cloud' },
+  { id: 'moon', name: 'Moonlight', thai: 'ใต้แสงจันทร์', bg: '#ede3fc', ink: '#70518f', accent: '#bda2d5', light: '#ffffff', sticker: 'moon', secondary: 'star', pattern: 'stars' },
+  { id: 'sunny', name: 'Paper petals', thai: 'ดอกไม้บนกระดาษ', bg: '#ffffff', ink: '#9674ac', accent: '#d7c4e4', light: '#faf6ff', sticker: 'sunflower', secondary: 'bee', pattern: 'dots' },
+  { id: 'peach', name: 'Sweet notes', thai: 'ข้อความหวาน ๆ', bg: '#f6effb', ink: '#8f649b', accent: '#cbb2d7', light: '#ffffff', sticker: 'peach', secondary: 'heart', pattern: 'gingham' },
+  { id: 'sakura', name: 'Lavender', thai: 'ดอกลาเวนเดอร์', bg: '#f3e9fa', ink: '#9167a4', accent: '#caaddc', light: '#ffffff', sticker: 'flower', secondary: 'bow', pattern: 'petals' },
+  { id: 'mint', name: 'Lilac friends', thai: 'เพื่อนตัวจิ๋ว', bg: '#f1eafb', ink: '#7c649a', accent: '#c2afdb', light: '#ffffff', sticker: 'frog', secondary: 'mushroom', pattern: 'grass' },
 ];
 
 export const FILTERS = [
@@ -23,6 +23,7 @@ export const FILTERS = [
   { id: 'vintage', name: 'Vintage', css: 'sepia(.5) saturate(.75) contrast(.9)' },
   { id: 'mono', name: 'B & W', css: 'grayscale(1) contrast(1.1)' },
   { id: 'pixel', name: '8-bit', css: 'saturate(1.2)' },
+  { id: 'ascii', name: 'ASCII', css: 'none' },
 ];
 
 export const STICKERS = [
@@ -34,4 +35,4 @@ export const STICKERS = [
   ['dog', 'หมา'], ['chicken', 'ไก่'], ['butterfly', 'ผีเสื้อ'], ['ghost', 'ผีน้อย'],
 ];
 
-export const COLORS = ['#4a6550', '#d47c93', '#a389bb', '#77a8c6', '#e6b554', '#fff9ed', '#473e46'];
+export const COLORS = ['#74509a', '#a366ad', '#b395ce', '#8278b2', '#d4b4e4', '#ffffff', '#45314e'];

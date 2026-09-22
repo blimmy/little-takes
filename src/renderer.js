@@ -1,5 +1,5 @@
-import { LAYOUTS, FRAMES } from './config.js';
-import { drawSprite, landscapeSVG, svgData } from './pixels.js';
+import { LAYOUTS, FRAMES } from './config.js?v=ascii-violet-1';
+import { drawSprite, landscapeSVG, svgData, drawAsciiPhoto, ASCII_FONT } from './ascii.js?v=ascii-violet-1';
 
 const imageCache = new Map();
 const filteredCache = new Map();
@@ -39,7 +39,9 @@ async function filteredPhoto(src, filter) {
   const ratio = Math.min(1, 1500 / Math.max(image.width,image.height));
   canvas.width = Math.round(image.width * ratio); canvas.height = Math.round(image.height * ratio);
   const ctx = canvas.getContext('2d', {willReadFrequently:true});
-  if (filter === 'pixel') {
+  if (filter === 'ascii') {
+    drawAsciiPhoto(ctx,image,canvas.width,canvas.height);
+  } else if (filter === 'pixel') {
     const mini = document.createElement('canvas');
     mini.width = Math.max(1,Math.round(canvas.width / 9)); mini.height = Math.max(1,Math.round(canvas.height / 9));
     mini.getContext('2d').drawImage(image,0,0,mini.width,mini.height);
@@ -65,16 +67,17 @@ async function filteredPhoto(src, filter) {
 }
 
 function pattern(ctx,frame,w,h) {
-  ctx.save(); ctx.fillStyle = frame.accent; ctx.globalAlpha = .16;
-  const u = w/30;
-  if (frame.pattern === 'gingham') {
-    for(let x=0;x<w;x+=u*2) ctx.fillRect(x,0,u,h);
-    for(let y=0;y<h;y+=u*2) ctx.fillRect(0,y,w,u);
-  } else {
-    for(let x=u/2;x<w;x+=u*2) for(let y=u/2;y<h;y+=u*2) {
-      ctx.fillRect(x+(Math.floor(y/u)%2)*u/2,y,u*.15,u*.15);
-    }
-  }
+  ctx.save();ctx.fillStyle=frame.accent;ctx.globalAlpha=.3;ctx.font=`${w*.021}px ${ASCII_FONT}`;ctx.textAlign='left';
+  const motifs={grass:',',gingham:'+',cloud:'.',stars:'*',dots:'.',petals:"'"},unit=w*.067;
+  for(let x=unit*.5;x<w;x+=unit)for(let y=unit*.5;y<h;y+=unit)ctx.fillText(motifs[frame.pattern]||'.',x,y);
+  ctx.restore();
+}
+
+function asciiBorder(ctx,x,y,w,h,color,size) {
+  ctx.save();ctx.font=`${size}px ${ASCII_FONT}`;ctx.fillStyle=color;ctx.textAlign='left';ctx.textBaseline='middle';
+  const count=Math.max(1,Math.floor(w/(size*.6))-1),edge='+'+'-'.repeat(count-1)+'+';
+  ctx.fillText(edge,x,y,w);ctx.fillText(edge,x,y+h,w);
+  for(let yy=y+size*1.2;yy<y+h-size*.4;yy+=size*1.2){ctx.fillText('|',x,yy);ctx.fillText('|',x+w-size*.6,yy);}
   ctx.restore();
 }
 
@@ -84,28 +87,28 @@ export async function renderStrip(state, placeholders = true) {
   const c = document.createElement('canvas'); c.width=layout.width; c.height=layout.height;
   const ctx = c.getContext('2d'); const w=c.width,h=c.height;
   ctx.fillStyle=frame.bg; ctx.fillRect(0,0,w,h); pattern(ctx,frame,w,h);
-  ctx.strokeStyle=frame.accent; ctx.lineWidth=w*.006; ctx.strokeRect(w*.021,w*.021,w-w*.042,h-w*.042);
-  ctx.fillStyle=frame.ink; ctx.font=`${w*.026}px "Press Start 2P", monospace`; ctx.textAlign='center';
-  ctx.fillText('LITTLE TAKES',w/2,w*.084);
+  asciiBorder(ctx,w*.021,w*.027,w-w*.042,h-w*.054,frame.accent,w*.02);
+  ctx.fillStyle=frame.ink; ctx.font=`bold ${w*.033}px ${ASCII_FONT}`; ctx.textAlign='center';
+  ctx.fillText('[ little takes ]',w/2,w*.084);
   const slots=geometry(layout);
   for(let i=0;i<slots.length;i++) {
     const r=slots[i];
-    ctx.fillStyle=frame.accent; ctx.fillRect(r.x-3,r.y-3,r.w+6,r.h+6);
+    ctx.fillStyle=frame.light;ctx.fillRect(r.x-4,r.y-4,r.w+8,r.h+8);
+    asciiBorder(ctx,r.x-7,r.y-7,r.w+14,r.h+14,frame.accent,w*.015);
     if(state.photos[i]) cover(ctx,await filteredPhoto(state.photos[i].src,state.filter),r.x,r.y,r.w,r.h);
     else if(placeholders) {
       cover(ctx,await loadImage(svgData(landscapeSVG(i))),r.x,r.y,r.w,r.h);
-      ctx.fillStyle='#fff9e9a6'; ctx.fillRect(r.x,r.y,r.w,r.h);
-      ctx.fillStyle=frame.ink; ctx.font=`${w*.04}px "Press Start 2P", monospace`; ctx.fillText(`0${i+1}`,r.x+r.w/2,r.y+r.h/2+w*.013);
+      ctx.fillStyle='#ffffff90'; ctx.fillRect(r.x,r.y,r.w,r.h);
+      ctx.fillStyle=frame.ink; ctx.font=`${w*.048}px ${ASCII_FONT}`; ctx.fillText(`[ 0${i+1} ]`,r.x+r.w/2,r.y+r.h/2+w*.013);
     }
   }
-  // Tiny frame companions live in the margins, so faces stay unobstructed.
-  const tiny=w*.039;
-  slots.forEach((r,i)=>{if(layout.cols===1){drawSprite(ctx,i%2?frame.secondary:frame.sticker,w*.012,r.y+r.h*.62,tiny);drawSprite(ctx,i%2?frame.sticker:frame.secondary,w*.945,r.y+r.h*.25,tiny);}});
+  ctx.font=`${w*.027}px ${ASCII_FONT}`;ctx.fillStyle=frame.ink;ctx.textAlign='center';
+  slots.forEach((r,i)=>{if(layout.cols===1){ctx.fillText(i%2?'*':'+',w*.04,r.y+r.h*.6);ctx.fillText(i%2?'+':'*',w*.962,r.y+r.h*.25);}});
   drawSprite(ctx,frame.sticker,w*.065,h-w*.2,w*.115);
   drawSprite(ctx,frame.secondary,w*.81,h-w*.17,w*.095);
   ctx.fillStyle=frame.ink; ctx.font=`600 ${w*.037}px "Bai Jamjuree", sans-serif`;
   ctx.fillText(state.caption || 'a little moment, a lovely memory',w/2,h-w*.136,w*.61);
-  ctx.font=`${w*.021}px "Press Start 2P", monospace`;
+  ctx.font=`${w*.03}px ${ASCII_FONT}`;
   ctx.fillText(state.showDate ? state.date : 'made with love',w/2,h-w*.076);
   for (const stroke of state.strokes) {
     if (!stroke.points.length) continue;
@@ -135,8 +138,8 @@ export function makeStory(strip, frameId) {
   ctx.fillStyle=f.accent;ctx.globalAlpha=.4;ctx.fillRect(x+15,y+20,w,h);ctx.globalAlpha=1;
   ctx.drawImage(strip,x,y,w,h);
   drawSprite(ctx,f.sticker,98,125,88);drawSprite(ctx,f.secondary,860,1710,75);
-  ctx.fillStyle=f.ink;ctx.textAlign='center';ctx.font='22px "Press Start 2P", monospace';ctx.fillText('a little moment',540,162);
-  ctx.font='20px "Press Start 2P", monospace';ctx.fillText('LITTLE TAKES',540,1780);
+  ctx.fillStyle=f.ink;ctx.textAlign='center';ctx.font=`30px ${ASCII_FONT}`;ctx.fillText('* a little moment *',540,162);
+  ctx.font=`28px ${ASCII_FONT}`;ctx.fillText('[ little takes ]',540,1780);
   return c;
 }
 

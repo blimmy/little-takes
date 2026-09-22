@@ -1,6 +1,6 @@
-import { LAYOUTS, FRAMES, FILTERS, STICKERS, COLORS } from './config.js';
-import { spriteSVG, landscapeSVG, svgData } from './pixels.js';
-import { renderStrip, makeStory, canvasBlob, loadImage, geometry, clearImageCaches } from './renderer.js';
+import { LAYOUTS, FRAMES, FILTERS, STICKERS, COLORS } from './config.js?v=ascii-violet-1';
+import { spriteSVG, landscapeSVG, svgData, drawAsciiPhoto } from './ascii.js?v=ascii-violet-1';
+import { renderStrip, makeStory, canvasBlob, loadImage, geometry, clearImageCaches } from './renderer.js?v=ascii-violet-1';
 
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
@@ -27,7 +27,7 @@ function initUI(){
   $$('[data-sprite]').forEach(el=>el.innerHTML=spriteSVG(el.dataset.sprite));
   $('#camera-landscape').src=svgData(landscapeSVG());
   $('#layout-options').innerHTML=LAYOUTS.map(l=>`<button class="layout-option ${l.id===state.layout?'selected':''}" data-layout="${l.id}" aria-label="${l.name} ${l.detail}" aria-pressed="${l.id===state.layout}"><span class="layout-mini ${l.id}">${'<i></i>'.repeat(l.count)}</span><small>${l.detail}</small></button>`).join('');
-  $('#frame-options').innerHTML=FRAMES.map(f=>`<button class="frame-option ${f.id===state.frame?'selected':''}" data-frame="${f.id}" aria-label="${f.name} ${f.thai}" aria-pressed="${f.id===state.frame}" style="--frame-bg:${f.bg};--frame-accent:${f.accent}"><i class="frame-check">✓</i><span class="frame-thumb"><span class="frame-paper"><i></i><i></i></span>${spriteSVG(f.sticker)}</span><span>${f.name}</span></button>`).join('');
+  $('#frame-options').innerHTML=FRAMES.map(f=>`<button class="frame-option ${f.id===state.frame?'selected':''}" data-frame="${f.id}" aria-label="${f.name} ${f.thai}" aria-pressed="${f.id===state.frame}" style="--frame-bg:${f.bg};--frame-accent:${f.accent}"><i class="frame-check">+</i><span class="frame-thumb"><span class="frame-paper" aria-hidden="true">+---+<br>| : |<br>| : |<br>+---+</span>${spriteSVG(f.sticker)}</span><span>${f.name}</span></button>`).join('');
   $('#filter-options').innerHTML=FILTERS.map(f=>`<button class="filter-option ${f.id===state.filter?'selected':''}" data-filter="${f.id}" aria-pressed="${f.id===state.filter}"><span class="filter-thumb"><img src="${svgData(landscapeSVG())}" alt="" style="filter:${f.css}"></span><span>${f.name}</span></button>`).join('');
   $('#sticker-options').innerHTML=STICKERS.map(([id,name])=>`<button class="sticker-option" data-sticker="${id}" aria-label="เพิ่ม${name}" title="${name}">${spriteSVG(id)}</button>`).join('');
   $('#color-options').innerHTML=COLORS.map(c=>`<button class="color-option ${c===color?'selected':''}" data-color="${c}" style="--color:${c}" aria-label="เลือกสี ${c}" aria-pressed="${c===color}"></button>`).join('');
@@ -125,12 +125,23 @@ function stopCamera(){
 function applyLiveFilter(){
   cancelAnimationFrame(pixelRAF);
   video.style.filter=FILTERS.find(f=>f.id===state.filter).css;video.classList.toggle('mirrored',mirrored);
-  const pixel=$('#pixel-camera');pixel.classList.toggle('mirrored',mirrored);pixel.hidden=!stream||state.filter!=='pixel';video.hidden=!stream||state.filter==='pixel';
-  if(stream&&state.filter==='pixel'){
+  const pixel=$('#pixel-camera');pixel.classList.toggle('mirrored',mirrored);
+  const rendered=['pixel','ascii'].includes(state.filter);
+  pixel.hidden=!stream||!rendered;video.hidden=!stream||rendered;
+  if(stream&&rendered){
     const tiny=document.createElement('canvas');tiny.width=90;tiny.height=Math.max(1,Math.round(90*video.videoHeight/video.videoWidth));
-    const tc=tiny.getContext('2d');pixel.width=video.videoWidth;pixel.height=video.videoHeight;
+    const tc=tiny.getContext('2d');pixel.width=Math.min(video.videoWidth,900);pixel.height=Math.round(pixel.width*video.videoHeight/video.videoWidth);
     const ctx=pixel.getContext('2d');ctx.imageSmoothingEnabled=false;
-    const paint=()=>{if(!stream||state.filter!=='pixel')return;tc.drawImage(video,0,0,tiny.width,tiny.height);ctx.drawImage(tiny,0,0,pixel.width,pixel.height);pixelRAF=requestAnimationFrame(paint);};paint();
+    let lastFrame=-Infinity;
+    const paint=(time=0)=>{
+      if(!stream||!['pixel','ascii'].includes(state.filter))return;
+      if(time-lastFrame>=80){
+        if(state.filter==='ascii')drawAsciiPhoto(ctx,video,pixel.width,pixel.height,100);
+        else{tc.drawImage(video,0,0,tiny.width,tiny.height);ctx.drawImage(tiny,0,0,pixel.width,pixel.height);}
+        lastFrame=time;
+      }
+      pixelRAF=requestAnimationFrame(paint);
+    };paint();
   }
 }
 

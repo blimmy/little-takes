@@ -36,6 +36,8 @@ def run():
         page.goto(URL, wait_until='networkidle')
         expect(page.locator('[data-frame]')).to_have_count(8)
         expect(page.locator('[data-sticker]')).to_have_count(24)
+        expect(page.locator('[data-filter]')).to_have_count(7)
+        assert page.locator('.ascii-sprite text').count() > 100
         expect(page.locator('#next-step')).to_be_disabled()
         expect(page.locator('#strip-preview')).to_have_attribute('height', '1536')
         page.screenshot(path=str(OUT / 'desktop.png'), full_page=True)
@@ -64,6 +66,10 @@ def run():
 
         page.locator('[data-filter="pixel"]').click()
         expect(page.locator('#pixel-camera')).to_be_visible()
+        pixel_image = page.locator('#pixel-camera').evaluate('(c)=>c.toDataURL()')
+        page.locator('[data-filter="ascii"]').click()
+        expect(page.locator('[data-filter="ascii"]')).to_have_attribute('aria-pressed', 'true')
+        assert page.locator('#pixel-camera').evaluate('(c)=>c.toDataURL()') != pixel_image
         page.locator('#mirror').click()
         expect(page.locator('#mirror')).to_have_attribute('aria-pressed', 'false')
         page.locator('#timer').select_option('0')
@@ -71,7 +77,7 @@ def run():
         expect(page.locator('#edit-stage')).to_be_visible(timeout=15000)
         expect(page.locator('.shot-thumb')).to_have_count(3)
         assert page.locator('#camera').evaluate('(v)=>v.srcObject===null'), 'Camera must close when editing'
-        report.append('Synthetic camera, pixel filter, mirror toggle, burst capture, camera release')
+        report.append('Synthetic camera, pixel and ASCII filters, mirror toggle, burst capture, camera release')
 
         page.locator('[data-sticker="bunny"]').click()
         expect(page.locator('#object-selection')).to_be_visible()
