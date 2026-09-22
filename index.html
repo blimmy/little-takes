@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f5e9">
+  <meta name="description" content="Little Takes — เว็บ photobooth พิกเซลพาสเทล ถ่ายรูป แต่งกรอบ ใส่สติกเกอร์ วาดภาพ แล้วเก็บความทรงจำเล็ก ๆ ฟรี ไม่ต้องสมัครสมาชิก">
+  <meta property="og:title" content="Little Takes · A cozy pixel photobooth">
+  <meta property="og:description" content="ห้องถ่ายรูปเล็ก ๆ สำหรับความทรงจำที่น่ารัก เลือกกรอบ ถ่ายรูป แต่งภาพ แล้วแชร์ได้เลย">
+  <meta property="og:type" content="website">
+  <title>Little Takes · ห้องถ่ายรูปของวันน่ารัก ๆ</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./assets/fonts/fonts.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#studio">ข้ามไปห้องถ่ายรูป</a>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="Little Takes หน้าหลัก"><span data-sprite="camera" class="brand-icon"></span><span>little takes<span class="brand-sub">a cozy pixel photobooth</span></span></a>
+    <nav aria-label="เมนูหลัก"><a href="#studio" class="nav-current">ห้องถ่ายรูป <span class="nav-dot"></span></a><button class="text-button" data-action="help">วิธีเล่น</button><span class="free-badge"><span data-sprite="heart"></span> ฟรีเสมอ ♡</span></nav>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-cloud cloud-one"></div><div class="hero-cloud cloud-two"></div><div class="hero-cloud cloud-three"></div>
+      <div class="hero-decoration deco-left" aria-hidden="true"><span class="floating-spark">✧</span><div class="deco-flower" data-sprite="sunflower"></div><div class="deco-frog" data-sprite="frog"></div><div class="deco-bunny" data-sprite="bunny"></div><div class="deco-mushroom" data-sprite="mushroom"></div><div class="deco-bee" data-sprite="bee"></div><div class="deco-grass"></div><span class="deco-caption">hello, sunshine!</span></div>
+      <p class="eyebrow"><span></span> OPEN FOR LITTLE HAPPY MOMENTS <span></span></p>
+      <h1 id="hero-title">Little moments.<br><span>Lovely memories.</span><i class="title-star" aria-hidden="true">✦</i></h1>
+      <p class="hero-description">แวะพัก ถ่ายรูป แล้วเก็บวันธรรมดาให้เป็นความทรงจำน่ารัก ๆ</p>
+      <div class="hero-decoration deco-right" aria-hidden="true"><div class="mini-polaroid back"><span data-sprite="cat"></span></div><div class="mini-polaroid front"><span data-sprite="bunny"></span><small>besties forever ♡</small></div><span class="floating-spark">✧</span><div class="deco-duck" data-sprite="duck"></div><div class="deco-berry" data-sprite="berry"></div><div class="deco-butterfly" data-sprite="butterfly"></div></div>
+      <div class="hero-bottom"><span data-sprite="sprout"></span><span>made for you, and your favorite people.</span><span data-sprite="sprout"></span></div>
+    </section>
+
+    <section id="studio" class="studio" aria-label="ห้องถ่ายรูป Little Takes">
+      <div class="window-bar"><span><span data-sprite="flower"></span> THE LITTLE PHOTO STUDIO</span><span class="window-right"><span data-sprite="frog"></span><span data-sprite="bunny"></span><span data-sprite="cat"></span><b>— □ ♡</b></span></div>
+      <div class="studio-steps" aria-label="ขั้นตอนการใช้งาน">
+        <button data-step="1" class="step active" aria-current="step"><span class="step-number">01</span><span>ถ่ายภาพ<small>strike a pose</small></span></button><span class="step-line"></span>
+        <button data-step="2" class="step"><span class="step-number">02</span><span>เติมความน่ารัก<small>make it yours</small></span></button><span class="step-line"></span>
+        <button data-step="3" class="step"><span class="step-number">03</span><span>เก็บความทรงจำ<small>save & share</small></span></button>
+      </div>
+
+      <div class="studio-body">
+        <aside class="options-panel">
+          <div id="capture-options">
+            <div class="section-label"><h2><span class="label-dot">1</span> เลือกเลย์เอาต์</h2><span class="tiny-label">LAYOUT</span></div>
+            <div id="layout-options" class="layout-options" role="group" aria-label="เลย์เอาต์ภาพ"></div>
+            <div class="section-label frame-heading"><h2><span class="label-dot">2</span> กรอบของวันนี้</h2><span class="tiny-label">8 FRAMES</span></div>
+            <div id="frame-options" class="frame-options" role="group" aria-label="ธีมกรอบ"></div>
+            <div class="little-note"><span data-sprite="bee"></span><p>เลือกแบบที่เป็นคุณ<br><b>เปลี่ยนกรอบทีหลังก็ได้นะ</b></p></div>
+          </div>
+          <div id="decorate-options" hidden>
+            <div class="section-label"><h2><span data-sprite="star"></span> ใส่ความเป็นคุณ</h2></div>
+            <div class="editor-tabs" role="group" aria-label="เครื่องมือตกแต่ง"><button data-tab="stickers" class="selected">สติกเกอร์</button><button data-tab="text">ข้อความ</button><button data-tab="draw">วาดรูป</button></div>
+            <div id="tab-stickers"><p class="control-help">แตะเพื่อเพิ่ม แล้วลากไปวางได้เลย</p><div id="sticker-options" class="sticker-options"></div></div>
+            <div id="tab-text" hidden><label class="field-label" for="text-input">เขียนอะไรน่ารัก ๆ</label><input id="text-input" maxlength="50" placeholder="วันนี้ใจฟู ♡" autocomplete="off"><label class="field-label" for="text-size">ขนาดข้อความ</label><input id="text-size" type="range" min="3" max="12" value="6"><button id="add-text" class="button secondary full">＋ เพิ่มข้อความ</button></div>
+            <div id="tab-draw" hidden><p class="control-help">ลากนิ้วหรือเมาส์บนภาพเพื่อวาด</p><label class="field-label" for="pen-size">ขนาดปากกา</label><input id="pen-size" type="range" min="3" max="22" value="7"><button id="clear-drawing" class="button secondary full">ล้างลายเส้น</button></div>
+            <div id="color-control" hidden><span class="field-label">สีที่ชอบ</span><div id="color-options" class="color-options"></div></div>
+            <div class="selection-tools" id="selection-tools" hidden><span class="field-label">ปรับชิ้นที่เลือก</span><div class="object-actions"><button data-edit="smaller" aria-label="ลดขนาด">−</button><button data-edit="larger" aria-label="เพิ่มขนาด">＋</button><button data-edit="rotate" aria-label="หมุน">↻</button><button data-edit="delete" aria-label="ลบชิ้นที่เลือก">ลบ</button></div></div>
+            <div class="undo-row"><button id="undo" class="text-button" disabled>↶ ย้อนกลับ</button><button id="redo" class="text-button" disabled>ทำซ้ำ ↷</button></div>
+            <label class="field-label" for="caption">ข้อความใต้ภาพ</label><input id="caption" maxlength="45" placeholder="a little moment, a lovely memory">
+            <label class="check-label"><input id="show-date" type="checkbox" checked> ใส่วันที่ไว้เป็นความทรงจำ</label>
+            <button class="text-button back-options" data-step="1">← เปลี่ยนกรอบ / ฟิลเตอร์</button>
+          </div>
+          <div id="save-options" hidden>
+            <span data-sprite="heart" class="save-heart"></span><h2 class="save-title">ความทรงจำพร้อมแล้ว!</h2><p class="control-help">เก็บไว้เอง หรือส่งให้คนโปรดก็ได้นะ</p>
+            <div class="section-label"><h2>รูปแบบไฟล์</h2></div>
+            <button class="format-option selected" data-format="strip"><span>▥</span><span>Photo strip<small>ภาพกรอบเต็ม · PNG</small></span><i>✓</i></button>
+            <button class="format-option" data-format="story"><span>▯</span><span>Story size<small>1080 × 1920 · 9:16</small></span><i>✓</i></button>
+            <p class="file-note" id="file-info" aria-live="polite">กำลังเตรียมไฟล์…</p>
+            <button id="download" class="button primary full" disabled><span>↓</span> ดาวน์โหลดภาพ</button>
+            <button id="share" class="button secondary full" disabled>↗ แชร์ความน่ารัก</button>
+            <p class="share-note">แชร์ผ่านเมนูของมือถือ หรือดาวน์โหลดแล้วเลือกรูปใน Instagram / Facebook / LINE ได้เลย</p>
+            <button class="text-button" data-step="2">← กลับไปแต่งอีกนิด</button>
+          </div>
+        </aside>
+
+        <div class="capture-panel" id="capture-panel">
+          <div class="camera-topline"><span class="live-label"><i></i><span id="camera-status">YOUR COZY CORNER</span></span><span class="photo-counter" id="photo-counter">0 / 3 ภาพ</span></div>
+          <div class="viewfinder" id="viewfinder">
+            <img class="camera-landscape" id="camera-landscape" alt="สวนพิกเซลพาสเทล มีบ้านเล็ก ๆ ต้นไม้และดอกไม้">
+            <video id="camera" playsinline autoplay muted hidden></video>
+            <canvas id="pixel-camera" hidden></canvas>
+            <div class="camera-welcome" id="camera-welcome"><span data-sprite="camera" class="welcome-camera"></span><h2>ยิ้มหน่อย โลกกำลังน่ารัก</h2><p>หามุมสบาย ๆ แล้วมาเก็บความทรงจำกัน</p><button class="button cream" id="enable-camera">เปิดกล้องของฉัน <span>↗</span></button></div>
+            <span class="view-corner tl"></span><span class="view-corner tr"></span><span class="view-corner bl"></span><span class="view-corner br"></span>
+            <div id="countdown" class="countdown" aria-live="assertive" hidden></div><div class="camera-flash" id="camera-flash"></div>
+            <div class="camera-bottomline"><span id="viewfinder-label">a little place to be yourself ♡</span><span>✦</span></div>
+          </div>
+          <div class="camera-tools"><button id="mirror" class="tool-button active" aria-pressed="true" aria-label="สะท้อนภาพกระจก">↔ <span>กระจก</span></button><button id="switch-camera" class="tool-button" aria-label="สลับกล้องหน้าและกล้องหลัง">↻ <span>สลับกล้อง</span></button><label class="timer-label" for="timer">◷ <select id="timer" aria-label="เวลานับถอยหลัง"><option value="3">3 วินาที</option><option value="5">5 วินาที</option><option value="10">10 วินาที</option><option value="0">ไม่หน่วง</option></select></label><button id="sound" class="tool-button" aria-pressed="false" aria-label="เสียงนับถอยหลัง">♫ <span>เสียงปิด</span></button></div>
+          <div class="section-label filters-heading"><h2>แต้มบรรยากาศให้ภาพ</h2><span class="tiny-label">FILTERS</span></div>
+          <div class="filter-options" id="filter-options" role="group" aria-label="ฟิลเตอร์"></div>
+          <div class="capture-actions"><button class="button primary capture-button" id="capture"><span data-sprite="camera"></span><span id="capture-label">เริ่มถ่ายรูป</span><span>✦</span></button><button class="button cancel" id="cancel-capture" hidden>หยุดถ่าย</button><button class="upload-button" id="upload"><span>↥</span> เลือกจากเครื่อง</button><input id="file-input" type="file" accept="image/jpeg,image/png,image/webp,image/avif,image/heic,image/heif" multiple hidden></div>
+          <p class="camera-caption" id="capture-hint">ถ่ายต่อเนื่อง 3 ภาพ · เตรียมท่าโปรดไว้ได้เลย</p>
+          <button class="demo-button" id="demo">ยังไม่พร้อมเปิดกล้อง? ลองเล่นด้วยภาพตัวอย่าง ↗</button>
+          <p id="camera-error" class="inline-error" role="alert" hidden></p>
+        </div>
+
+        <div id="edit-stage" class="edit-stage" hidden><div class="edit-stage-heading"><span class="eyebrow">A LITTLE BIT OF YOU</span><h2>เติมเรื่องราวให้รูปของคุณ</h2><p id="edit-instruction">แตะสติกเกอร์ด้านซ้าย แล้วลากไปวางบนภาพ</p></div><div id="editor-mount" class="editor-mount"></div><p class="editor-bottom-note"><span data-sprite="flower"></span> ไม่มีถูกหรือผิด แค่สนุกกับมันก็พอ ♡</p></div>
+        <div id="save-stage" class="save-stage" hidden><p class="eyebrow">A MEMORY TO KEEP</p><h2>หนึ่งวันธรรมดาที่แสนน่ารัก ♡</h2><div id="save-mount" class="save-mount"></div><p>made with a little love, by you.</p></div>
+
+        <aside class="preview-panel" id="preview-panel"><div class="preview-heading"><span data-sprite="heart"></span><h2>ความทรงจำของคุณ</h2></div><span class="preview-subtitle">a little keepsake</span><div class="preview-board" id="preview-board"><span class="tape"></span><div id="preview-mount" class="preview-mount"><div id="canvas-wrap" class="canvas-wrap"><canvas id="strip-preview" aria-label="ตัวอย่างภาพ Photo strip"></canvas><div id="object-selection" class="object-selection" hidden></div></div></div><span class="board-spark spark-1">✦</span><span class="board-spark spark-2">✧</span></div><div id="photo-tray" class="photo-tray" aria-label="รูปที่ถ่ายแล้ว"></div><div class="preview-frame-name"><span id="selected-frame-name">Little meadow</span><span>✿</span></div><button id="next-step" class="button secondary full">แต่งภาพต่อ <span>→</span></button><p class="preview-note" id="preview-note">รูปน่ารัก ๆ กำลังจะมาอยู่ตรงนี้</p></aside>
+      </div>
+      <div class="studio-footer"><span><span data-sprite="sprout"></span> รูปของคุณอยู่ในเครื่องคุณเสมอ ไม่อัปโหลดไปที่ไหน</span><button id="reset" class="text-button">↻ เริ่มใหม่</button></div>
+    </section>
+
+    <section class="how-it-works" aria-label="ขั้นตอนสั้น ๆ"><div><span data-sprite="flower"></span><span>เลือกกรอบที่ใช่<small>a frame for every mood</small></span></div><i>······</i><div><span data-sprite="camera"></span><span>เป็นตัวเองให้เต็มที่<small>just you, being you</small></span></div><i>······</i><div><span data-sprite="heart"></span><span>เก็บไว้ยิ้มวันหลัง<small>little things, big feelings</small></span></div></section>
+    <section class="friends-garden" aria-label="เพื่อนในสวน Little Takes"><div class="garden-sky"><span class="garden-cloud gc-left"></span><span class="garden-cloud gc-right"></span><p class="eyebrow">THE LITTLE TAKES GARDEN</p><h2>มีเพื่อนรอยิ้มให้คุณอยู่ตรงนี้เสมอ ♡</h2><p class="garden-sub">แตะทักทายเพื่อนตัวจิ๋วได้เลย</p></div><div class="garden-ground"><span class="garden-prop prop-flower" data-sprite="sunflower"></span><span class="garden-prop prop-shroom" data-sprite="mushroom"></span><span class="garden-prop prop-berry" data-sprite="berry"></span><span class="garden-prop prop-sprout" data-sprite="sprout"></span><div class="garden-friends" id="garden-friends"></div><span class="garden-prop prop-flower2" data-sprite="flower"></span><span class="garden-prop prop-shroom2" data-sprite="mushroom"></span></div><span class="garden-butterfly" data-sprite="butterfly"></span><span class="garden-bee" data-sprite="bee"></span></section>
+  </main>
+  <footer class="site-footer"><span class="footer-brand">little takes<span data-sprite="flower"></span></span><span>a pocketful of happy memories.</span><button class="text-button" data-action="privacy">เรื่องความเป็นส่วนตัว</button></footer>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <dialog id="info-dialog"><button class="dialog-close" aria-label="ปิดหน้าต่าง">×</button><div id="dialog-content"></div></dialog>
+  <dialog id="reset-dialog"><span data-sprite="sprout" class="dialog-sprite"></span><h2>เริ่มความทรงจำใหม่?</h2><p>รูปและของตกแต่งในรอบนี้จะถูกล้าง<br>อย่าลืมดาวน์โหลดรูปที่ชอบก่อนนะ</p><div class="dialog-actions"><button class="button secondary" id="keep-session">แต่งต่อก่อน</button><button class="button primary" id="confirm-reset">เริ่มใหม่เลย</button></div></dialog>
+  <noscript><p class="noscript">กรุณาเปิด JavaScript เพื่อใช้งานกล้องและตกแต่งรูปภาพ</p></noscript>
+</body>
+</html>
