@@ -1,5 +1,5 @@
 // Original character art, shared by SVG previews and Canvas exports.
-import { ORNAMENTS, ornamentSVG } from './ornaments.js?v=fahkwang-1';
+import { ORNAMENTS, ornamentSVG } from './ornaments.js?v=retro-3';
 export const ASCII_FONT = '"Courier New", Courier, monospace';
 const ART = {
   flower: ['  .-.  ', ' ( @ ) ', '  `|\'  ', ' \\ | / ', '  \\|/  '],
@@ -27,13 +27,13 @@ const ART = {
   butterfly: [' .-. .-. ', '(   Y   )', ' >--|--< ', '(   |   )', ' `-\' `-\' '],
   ghost: ['  .---.  ', ' / o o \\ ', '|   ~   |', '|       |', ' |_/|_/| '],
 };
-const INKS = { berry:'#a05b97', heart:'#a05b97', flower:'#9b70b5', peach:'#a26b9b', bow:'#ab78b6', cherry:'#a26096', moon:'#71619d', cloud:'#8b83ab', star:'#9d81bb', frog:'#776296', sprout:'#7f6d9e', bunny:'#9479af', cat:'#7a5c9c', ghost:'#9180b8' };
+const INKS = {berry:'#c68a8d',heart:'#c38997',flower:'#c69b8f',peach:'#c4a080',bow:'#bf8d9f',cherry:'#c7898f',moon:'#a2aabe',cloud:'#9db9c9',star:'#c2b17a',frog:'#8eae97',sprout:'#9baa81',bunny:'#b6a7a0',cat:'#94acb6',ghost:'#a1b9bc',butterfly:'#8dafbb',bear:'#b4a08a',pig:'#c7a0a6',dog:'#b9a894',duck:'#c4b47d',chicken:'#c5b894',sunflower:'#c3af70'};
 const xml = text => text.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 export function artLines(name) { return ORNAMENTS[name] || ART[name] || ART.flower; }
 
 export function spriteSVG(name, size=32) {
   const lines=artLines(name), width=Math.max(...lines.map(l=>l.length))*10+4, height=lines.length*17+5;
-  const color=INKS[name] || '#83669e';
+  const color=INKS[name] || '#8fa7ae';
   return `<svg xmlns="http://www.w3.org/2000/svg" class="ascii-sprite" width="${size}" height="${size}" viewBox="0 0 ${width} ${height}" aria-hidden="true"><g fill="${color}" font-family="Courier New, Courier, monospace" font-size="16.67" font-weight="bold" xml:space="preserve">${lines.map((line,i)=>`<text style="white-space:pre" x="2" y="${15+i*17}">${xml(line)}</text>`).join('')}</g></svg>`;
 }
 
@@ -41,20 +41,20 @@ export function drawSprite(ctx,name,x,y,size) {
   const lines=artLines(name), cols=Math.max(...lines.map(l=>l.length));
   const fontSize=Math.min(size/(cols*.6),size/(lines.length*1.04));
   const w=cols*fontSize*.6,h=lines.length*fontSize*1.04;
-  ctx.save();ctx.font=`bold ${fontSize}px ${ASCII_FONT}`;ctx.fillStyle=INKS[name]||'#83669e';ctx.textAlign='left';ctx.textBaseline='top';
+  ctx.save();ctx.font=`bold ${fontSize}px ${ASCII_FONT}`;ctx.fillStyle=INKS[name]||'#8fa7ae';ctx.textAlign='left';ctx.textBaseline='top';
   ctx.shadowColor='#ffffffcc';ctx.shadowOffsetX=fontSize*.045;ctx.shadowOffsetY=fontSize*.06;
   lines.forEach((line,i)=>ctx.fillText(line,x+(size-w)/2,y+(size-h)/2+i*fontSize*1.04));
   ctx.restore();
 }
 
 export function landscapeSVG(variant=0) {
-  const backgrounds=['#f9f5fd','#fcf6fb','#f5f2fc','#fdfbff'],inks=['#a087b8','#ad8ba9','#9884b0','#af9abb'];
+  const backgrounds=['#f7faf1','#fff1f2','#f0f7fc','#fff8e9'],inks=['#96af96','#c297a0','#8facbf','#c2b181'];
   const ink=inks[variant%4];
   const motif=(name,x,y,w,h,rotate=0)=>`<g transform="translate(${x} ${y}) rotate(${rotate} ${w/2} ${h/2})">${ornamentSVG(name,w,h,ink)}</g>`;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="640" height="400" viewBox="0 0 640 400">
     <rect width="640" height="400" fill="${backgrounds[variant%4]}"/>
-    <rect x="15" y="15" width="610" height="370" rx="150" fill="none" stroke="#d8c6e7" stroke-dasharray="1 6"/>
-    <ellipse cx="318" cy="199" rx="204" ry="178" fill="#fffcff" opacity=".7"/>
+    <rect x="15" y="15" width="610" height="370" rx="150" fill="none" stroke="#ccdacf" stroke-dasharray="1 6"/>
+    <ellipse cx="318" cy="199" rx="204" ry="178" fill="#fffefa" opacity=".7"/>
     ${motif(variant%2?'rose':'bouquet',-12,116,205,270,-13)}
     ${motif('butterfly',471,24,158,142,18)}
     ${motif('rose',498,229,128,164,19)}
@@ -72,11 +72,11 @@ export function drawAsciiPhoto(ctx,source,width,height,columns=100) {
   if(sampler.width!==cols)sampler.width=cols;if(sampler.height!==rows)sampler.height=rows;
   sampleContext.drawImage(source,0,0,cols,rows);
   const data=sampleContext.getImageData(0,0,cols,rows).data,ramp='@%#*+=-:. ';
-  ctx.save();ctx.fillStyle='#fdfaff';ctx.fillRect(0,0,width,height);ctx.font=`bold ${cell/0.6}px ${ASCII_FONT}`;ctx.textAlign='left';ctx.textBaseline='top';
+  ctx.save();ctx.fillStyle='#f9fcff';ctx.fillRect(0,0,width,height);ctx.font=`bold ${cell/0.6}px ${ASCII_FONT}`;ctx.textAlign='left';ctx.textBaseline='top';
   for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){
     const i=(y*cols+x)*4,luma=(data[i]*.299+data[i+1]*.587+data[i+2]*.114)/255;
     const glyph=ramp[Math.min(ramp.length-1,Math.floor(luma*ramp.length))];if(glyph===' ')continue;
-    ctx.fillStyle=`rgb(${Math.round(74+luma*65)},${Math.round(43+luma*63)},${Math.round(104+luma*70)})`;
+    ctx.fillStyle=`rgb(${Math.round(69+luma*59)},${Math.round(91+luma*59)},${Math.round(108+luma*57)})`;
     ctx.fillText(glyph,x*cell,y*line);
   }
   ctx.restore();

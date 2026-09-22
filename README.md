@@ -1,39 +1,53 @@
 # Little Takes
 
-A public, Thai-first ASCII art photobooth with violet-and-white botanical illustrations, glamorous calligraphy, 24 ASCII stickers, and eight little animal friends.
+A public Thai photobooth inside a playful retro Windows browser. Colorful pastel chrome, original ASCII illustrations, Fahkwang Thai text, and Great Vibes calligraphy.
 
-## Use
+**[Open the booth](https://blimmy.github.io/little-takes/)**
 
-Choose a layout and frame, enable the camera, and take a timed photo sequence. You can also upload pictures or try the included illustrated samples. Decorate the composition, then download a PNG or use the device's native share menu.
+## Make a memory
 
-- Four layouts: three-photo strip, four-photo strip, 2 × 2 grid, and a single-photo keepsake.
-- Eight frames: Violet Garden, Love Letters, Cloud Notes, Moonlight, Paper Petals, Sweet Notes, Lavender, and Lilac Friends.
-- Seven filters (including a live ASCII character filter), mirrored camera, front/rear camera request, optional countdown audio, and 0/3/5/10-second timers.
-- 24 original ASCII stickers; dragging, resizing, rotation, and deletion.
-- Thai or English lettering with glam script, clean, and typewriter fonts; seven ink colors, freehand drawing, undo/redo, custom caption, and optional date.
-- Full-resolution strip PNG and a separate 1080 × 1920 story composition.
-- Device sharing with a download fallback. Browsers cannot guarantee a direct Instagram/Facebook/LINE Story destination: available targets depend on the device and installed apps. Select the exported image inside the target app if its Story option is absent.
-- Responsive layout, keyboard-accessible controls, reduced-motion support, and local fonts.
+1. **Choose a frame.** Twenty templates: strips, postcards, contact sheets, circles, hearts, and film borders, with one to eight photo slots.
+2. **Take pictures.** Shoot individually or as a sequence, with a visible counter up to eight. Each supported camera capture saves a still and a silent 1.8-second Live clip. Eight photos are spare choices; continue as soon as you have enough for the selected frame. Local uploads and illustrated samples also work.
+3. **Choose your favorites.** Assign photos to slots, swap their order, or use autofill. Changing the frame preserves the original captures.
+4. **Decorate.** Twelve pastel palettes, custom frame colors, seven filters, 64 transparent PNG stickers, custom PNG imports, text, drawing, and undo/redo. Stickers and text can be moved, resized, rotated, and removed.
+5. **Preview and save.** Download a full-resolution PNG or a six-second video. Live clips loop in their selected slots; still photos move with a gentle zoom. Frame colors, filters, text, and decorations are included in both exports. A separate 1080 × 1920 Story composition is available for images and videos.
 
-Photos stay in the current browser tab's memory. The app does not upload photos, track visitors, or require an account. Refreshing or closing the tab removes the session. The hosting provider may retain ordinary access logs.
+Camera controls include mirror, front/rear camera requests, optional countdown audio, and 0/3/5/10-second timers. Capture and video generation can be cancelled.
+
+Video is MP4 or WebM depending on browser support. Live capture and video export require MediaRecorder and Canvas captureStream; unsupported browsers retain the still-photo workflow. These are ordinary short videos, not Apple Live Photo files. Video exports fit within 1080 × 1920; image exports retain the template's full resolution.
+
+The Share button sends the currently previewed image or video through the device's share menu. Available apps and Story destinations depend on the device and installed apps. If a Story target is unavailable, download the file and select it from the target app's gallery.
+
+## Privacy
+
+Photos, Live clips, and edits stay in the current browser tab's memory. The app does not upload media, request the microphone, track visitors, or require an account. The camera closes when leaving the capture screen or switching tabs. Closing or refreshing the tab removes the session, so download anything you want to keep. GitHub Pages may retain ordinary hosting access logs.
 
 ## Local development
 
-This is a static website using browser-native ES modules and Canvas. It has no application dependencies or build step.
+The site uses browser-native ES modules and Canvas. No application dependencies, build step, API keys, or backend are required.
 
 ```sh
 python3 -m http.server 4175 --bind 127.0.0.1
 ```
 
-Open `http://localhost:4175`. Camera access requires localhost or HTTPS. On a phone, use the HTTPS deployment; a plain HTTP LAN address generally cannot request the camera.
+Open `http://localhost:4175`. Camera access requires localhost or HTTPS. A phone should use the HTTPS deployment; a plain HTTP LAN address generally cannot request the camera.
+
+- `index.html`, `windows.css`: five-stage interface and responsive desktop theme.
+- `src/app.js`: capture roll, photo selection, decoration, navigation, and sharing.
+- `src/config.js`: templates, palettes, filters, and colors.
+- `src/renderer.js`: shared still/video composition, clipping, filters, and Story format.
+- `src/media.js`: silent Live capture and native video encoding.
+- `src/stickers.js`, `assets/stickers/`: original sticker catalog and 64 transparent PNG files.
+- `src/ascii.js`, `src/ornaments.js`: original ASCII artwork.
+- `src/typography.js`, `assets/fonts/`: local fonts used by the interface and exports.
 
 ## GitHub Pages
 
-Publish `main` from the repository root. `.nojekyll` serves the files directly, and all app asset references are relative so the site also works under a repository subpath. No API keys, environment variables, or backend services are required.
+Publish `main` from the repository root. `.nojekyll` serves files directly, and relative asset references support the repository subpath.
 
 ## Verification
 
-`tests/browser_test.py` exercises camera capture using Chromium's synthetic camera, countdown cancellation, decoration, real PNG downloads, story dimensions, local upload, sharing fallback, responsive layouts, and denied camera permission. It never accesses the physical camera.
+`tests/browser_test.py` exercises all five stages with Chromium's synthetic camera, never the physical camera. It covers still/Live capture, cancellation, the eight-photo limit, early continuation, selective slot assignment, editing, actual PNG and video downloads, Story dimensions, native share file handoff, upload fallback, reset, and responsive widths from 320 to 1440 px. When ffmpeg is installed at `/opt/homebrew/bin`, it also decodes exported video and checks that frames contain movement.
 
 ```sh
 python3 -m venv .venv
@@ -42,12 +56,12 @@ python3 -m venv .venv
 .venv/bin/python tests/browser_test.py http://localhost:4175
 ```
 
-Set `CHROME_PATH` to use an existing Chrome binary. Test output and screenshots are written to the ignored `test-results/` directory.
+Set `CHROME_PATH` to use an existing Chrome binary. Screenshots, downloads, and reports go to the ignored `test-results/` directory.
 
-Native mobile share sheets and physical front/rear cameras require a real device to verify. HEIC/HEIF decoding depends on browser support; unsupported files receive a message suggesting JPG, PNG, or WebP. Uploads are limited to 30 MB each and resized to at most 1800 px for a manageable editing session.
+Physical front/rear cameras and native mobile share sheets need a real device to verify. HEIC/HEIF decoding depends on browser support; unsupported images receive a message suggesting JPG, PNG, or WebP. Photo uploads are limited to 30 MB each and resized to at most 1800 px. Custom decoration images are limited to 10 MB and normalized to a transparent 512 px canvas.
 
 ## Artwork and fonts
 
-ASCII characters and frame designs are original compositions in `src/ascii.js` and `src/ornaments.js`, shared by SVG previews and Canvas exports. Original botanical and character drawings are sampled into shaded ASCII text, with explicit whitespace preservation for SVG rendering. The detailed character illustration direction was inspired by the [ASCII Art Archive](https://www.asciiart.eu/animals/insects/butterflies); no artwork was copied.
+Frame designs, characters, botanical illustrations, and sticker drawings are original compositions. Vector shapes are sampled into shaded ASCII characters and rendered into SVG previews, Canvas compositions, and transparent PNG stickers. The illustration direction was inspired by the [ASCII Art Archive](https://www.asciiart.eu/animals/insects/butterflies); no artwork was copied.
 
-Locally bundled [Fahkwang](https://fonts.google.com/specimen/Fahkwang) is used for all Thai text, including headings, controls, dialogs, and Canvas exports. [Great Vibes](https://fonts.google.com/specimen/Great+Vibes) provides Latin calligraphy, and system monospace fonts preserve the ASCII illustrations. Every lettering style falls back to Fahkwang for Thai glyphs. Canvas exports wait for the font files, and text selection uses the same typeface as export. Font license texts are in `assets/fonts/`.
+Locally bundled [Fahkwang](https://fonts.google.com/specimen/Fahkwang) is used for all Thai text, including headings, controls, dialogs, and exported lettering. [Great Vibes](https://fonts.google.com/specimen/Great+Vibes) provides Latin calligraphy. Monospace fonts preserve ASCII artwork; all text styles fall back to Fahkwang for Thai glyphs. Exports wait for the fonts to load. Font licenses are in `assets/fonts/`.
