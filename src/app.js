@@ -1,8 +1,8 @@
-import { LAYOUTS, FRAMES, FILTERS, STICKERS, COLORS } from './config.js?v=glam-2';
-import { spriteSVG, landscapeSVG, svgData, drawAsciiPhoto } from './ascii.js?v=glam-2';
-import { renderStrip, makeStory, canvasBlob, loadImage, geometry, clearImageCaches } from './renderer.js?v=glam-2';
-import { ornamentSVG } from './ornaments.js?v=glam-2';
-import { letteringFont } from './typography.js?v=glam-2';
+import { LAYOUTS, FRAMES, FILTERS, STICKERS, COLORS } from './config.js?v=fahkwang-1';
+import { spriteSVG, landscapeSVG, svgData, drawAsciiPhoto } from './ascii.js?v=fahkwang-1';
+import { renderStrip, makeStory, canvasBlob, loadImage, geometry, clearImageCaches } from './renderer.js?v=fahkwang-1';
+import { ornamentSVG } from './ornaments.js?v=fahkwang-1';
+import { letteringFont } from './typography.js?v=fahkwang-1';
 
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];

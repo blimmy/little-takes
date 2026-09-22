@@ -1,5 +1,5 @@
 // Original character art, shared by SVG previews and Canvas exports.
-import { ORNAMENTS, ornamentSVG } from './ornaments.js?v=glam-2';
+import { ORNAMENTS, ornamentSVG } from './ornaments.js?v=fahkwang-1';
 export const ASCII_FONT = '"Courier New", Courier, monospace';
 const ART = {
   flower: ['  .-.  ', ' ( @ ) ', '  `|\'  ', ' \\ | / ', '  \\|/  '],

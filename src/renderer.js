@@ -1,6 +1,6 @@
-import { LAYOUTS, FRAMES } from './config.js?v=glam-2';
-import { drawSprite, landscapeSVG, svgData, drawAsciiPhoto, ASCII_FONT } from './ascii.js?v=glam-2';
-import { letteringFont, fontsReady } from './typography.js?v=glam-2';
+import { LAYOUTS, FRAMES } from './config.js?v=fahkwang-1';
+import { drawSprite, landscapeSVG, svgData, drawAsciiPhoto, ASCII_FONT } from './ascii.js?v=fahkwang-1';
+import { letteringFont, fontsReady } from './typography.js?v=fahkwang-1';
 
 const imageCache = new Map();
 const filteredCache = new Map();

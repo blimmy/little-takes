@@ -1,35 +1,28 @@
 @font-face {
-  font-family: 'Bai Jamjuree';
+  font-family: 'Fahkwang';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(./font-0.ttf) format('truetype');
+  src: url(./fahkwang-400.ttf) format('truetype');
 }
 @font-face {
-  font-family: 'Bai Jamjuree';
+  font-family: 'Fahkwang';
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(./font-1.ttf) format('truetype');
+  src: url(./fahkwang-500.ttf) format('truetype');
 }
 @font-face {
-  font-family: 'Bai Jamjuree';
+  font-family: 'Fahkwang';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(./font-2.ttf) format('truetype');
+  src: url(./fahkwang-600.ttf) format('truetype');
 }
 @font-face {
-  font-family: 'Bai Jamjuree';
+  font-family: 'Fahkwang';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(./font-3.ttf) format('truetype');
-}
-@font-face {
-  font-family: 'Press Start 2P';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(./font-4.ttf) format('truetype');
+  src: url(./fahkwang-700.ttf) format('truetype');
 }
